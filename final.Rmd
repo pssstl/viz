@@ -13,7 +13,6 @@ library("here")
 library("forcats")
 library("fivethirtyeight")
 library("wesanderson")
-library("ggplot")
 library("ggplot2")
 library("gdata")
 library("viridis")
@@ -45,7 +44,9 @@ Fig1.1 <- ggplot(SKY, aes(x = Category)) +
   geom_histogram(stat = "Count",
                  fill = "#56B4E9",
                  color = "white",
-                 alpha = 0.7) 
+                 alpha = 0.7) +
+   theme_minimal(base_size = 15)
+
 Fig1.1
 
 Fig1.2 <- ggplot(SKY, aes(x = Category,
@@ -58,8 +59,9 @@ Fig1.2 <- ggplot(SKY, aes(x = Category,
   coord_flip() +
   labs(x = "Category",
        y = "Count",
-       title = "Where do participants come from?") +
-    theme_minimal(base_size = 15)
+       title = "Where are the participants from?") +
+    theme_minimal(base_size = 15) 
+
 Fig1.2
 ```
 
@@ -71,9 +73,10 @@ Fig2.1 <- ggplot(SKY, x = 0:5, aes(Recommend, Category)) +
    ggridges::geom_density_ridges(color = "white",
                                 alpha = 0.4) +
   scale_color_OkabeIto() +
-    labs(x = "Five-point Liker Scale (No-Yes)",
+    labs(x = "Strongly Disagree - Strongly Agree",
        y = "Category",
-       title = "I would recommend this training to my peers as they would benefit from it") 
+       title = "I would recommend this training to my peers as they would benefit from it")  +
+   theme_minimal(base_size = 15)
 Fig2.1
 
 
@@ -81,9 +84,10 @@ Fig2.2 <- ggplot(SKY, x = 0:5, aes(Recommend, Category)) +
    ggridges::geom_density_ridges(color = "white",
                                 alpha = 0.4) +
   scale_color_OkabeIto() +
-    labs(x = "Five-point Liker Scale (No-Yes)",
+    labs(x = "Strongly Disagree - Strongly Agree",
        y = "Category",
-       title = "I would recommend this training to my peers as they would benefit from it") 
+       title = "I would recommend this training to my peers as they would benefit from it")  +
+  theme_minimal(base_size = 15)
 Fig2.2
 
 
@@ -91,7 +95,93 @@ Fig2.2
 
 
 ```{r survey response quantitative}
-ggplot(SKY, aes())
+ggplot(SKY, aes(x = Name, y = energy)) +
+   geom_point() +
+  coord_flip() +
+  labs(x = "Participant",
+       y = "Strongly Disagree - Strongly Agree",
+       title = "The Retreat has increased my energy levels") +
+    theme_minimal(base_size = 15)
+
+
+ggplot(SKY, aes(x = Name, y = clarity_mind)) +
+  geom_point() +
+  coord_flip() +
+    labs(x = "Participant",
+       y = "Strongly Disagree - Strongly Agree",
+       title = "The Retreat has enhanced my clarity of mind") +
+    theme_minimal(base_size = 15)
+
+
+ggplot(SKY, aes(x = Name, y = multiple_responsibilities)) +
+  geom_point() +
+  coord_flip() +
+    labs(x = "Participant",
+       y = "Strongly Disagree - Strongly Agree",
+       title = "The Retreat has increased my ability to manage multiple responsibilities") +
+    theme_minimal(base_size = 15)
+
+
+ggplot(SKY, aes(x = Name, y = connect_to_myself)) +
+  geom_point() +
+  coord_flip() +
+    labs(x = "Participant",
+       y = "Strongly Disagree - Strongly Agree",
+       title = "The Retreat has enhanced my ability to connect to myself") +
+    theme_minimal(base_size = 15)
+
+
+ggplot(SKY, aes(x = Name, y = stay_focused)) +
+  geom_point() +
+  coord_flip() +
+    labs(x = "Participant",
+       y = "Strongly Disagree - Strongly Agree",
+       title = "The Retreat has increased my ability to stay focused on the task at hand") +
+    theme_minimal(base_size = 15)
+
+
+
+ggplot(SKY, aes(x = Name, y = remain_calm)) +
+  geom_point() +
+  coord_flip() +
+    labs(x = "Participant",
+       y = "Strongly Disagree - Strongly Agree",
+       title = "The Retreat has improved my ability to remain calm in difficult situations") +
+    theme_minimal(base_size = 15)
+
+
+ggplot(SKY, aes(x = Name, y = gain_resilience)) +
+  geom_point() +
+  coord_flip() +
+    labs(x = "Participant",
+       y = "Strongly Disagree - Strongly Agree",
+       title = "The Retreat has increased my ability to gain resilience")+
+    theme_minimal(base_size = 15) 
+
+ggplot(SKY, aes(x = Name, y = broader_perspectives)) +
+  geom_point() +
+  coord_flip() +
+    labs(x = "Participant",
+       y = "Strongly Disagree - Strongly Agree",
+       title = "The Retreat has increased my ability to gain broader perspectives when facing challenging situations") +
+    theme_minimal(base_size = 15)
+
+ggplot(SKY, aes(x = Name, y = connect_with_others)) +
+  geom_point() +
+  coord_flip() +
+    labs(x = "Participant",
+       y = "Strongly Disagree - Strongly Agree",
+       title = "The Retreat has increased my ability to connect with others") +
+    theme_minimal(base_size = 15)
+
+
+ggplot(SKY, aes(x = Name, y = good_investment_of_time)) +
+  geom_point() +
+  coord_flip() +
+    labs(x = "Participant",
+       y = "Strongly Disagree - Strongly Agree",
+       title = "The Retreat is a good investment of time") +
+    theme_minimal(base_size = 15)
 ```
 
 
@@ -146,7 +236,8 @@ experience_df  %>%
   ggplot(aes(word, n)) +
   geom_col() +
   xlab(NULL) +
-  coord_flip()
+  coord_flip() +
+    theme_minimal(base_size = 15)
   
 
 
