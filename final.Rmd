@@ -19,6 +19,7 @@ library("viridis")
 library("colorblindr")
 library("stringr")
 library("tidytext")
+library("xtable")
 knitr::opts_chunk$set(warning = FALSE,
                       message = FALSE,
                       error = TRUE,
@@ -40,17 +41,28 @@ SKY <- import(here("data", "survey.xlsx"), setclass = "tbl_df")
 
 str(SKY)
 
-Fig1.1 <- ggplot(SKY, aes(x = Category)) +
+#Fig1.1
+ggplot(SKY, aes(x = Category)) +
   geom_histogram(stat = "Count",
                  fill = "#56B4E9",
                  color = "white",
                  alpha = 0.7) +
    theme_minimal(base_size = 15)
 
-Fig1.1
 
-Fig1.2 <- ggplot(SKY, aes(x = Category,
-                decreasing = TRUE)) +
+
+#Fig1.2
+SKY
+
+SKY %>% 
+  mutate(Category = factor(Category, 
+                           levels = c("Graduate",
+                                      "Community member", 
+                                      "Faculty/Staff",
+                                      "Undergrad",
+                                      "Post-bach"))) %>% 
+
+ggplot(aes(x = Category)) +
   geom_histogram(stat = "count",
                  color = "white",
                  alpha = 0.7) +
@@ -60,27 +72,36 @@ Fig1.2 <- ggplot(SKY, aes(x = Category,
   labs(x = "Category",
        y = "Count",
        title = "Where are the participants from?") +
-    theme_minimal(base_size = 15) 
+    theme_minimal(base_size = 15)  + 
+  theme(panel.grid.minor = element_line(linetype = "blank"))
 
-Fig1.2 
+...............
+#Fig1.3
+SKY %>% 
+  count(Category) %>% 
+  ggplot(aes(x = fct_reorder(Category, n), n)) +
+  geom_col(aes(fill = Category),
+           color = "white",
+           alpha = 0.7) +
+  scale_y_continuous(breaks = seq(0, 11, by = 1),
+                     limits = c(0, 10.25)) +
+  scale_fill_OkabeIto() +
+  coord_flip(expand = FALSE) +
+  labs(x = "Category",
+       y = "Count",
+       title = "Where are the participants from?") +
+  theme_minimal(base_size = 15)  + 
+  theme(panel.grid.minor = element_line(linetype = "blank")) +
+  guides(fill = "none")
+
 ```
 
 
 ```{r survey recommend}
+library(ggridges)
 
-
-Fig2.1 <- ggplot(SKY, x = 0:5, aes(Recommend, Category)) +
-   ggridges::geom_density_ridges(color = "white",
-                                alpha = 0.4) +
-  scale_color_OkabeIto() +
-    labs(x = "Strongly Disagree - Strongly Agree",
-       y = "Category",
-       title = "I would recommend this training to my peers as they would benefit from it")  +
-   theme_minimal(base_size = 15)
-Fig2.1
-
-
-Fig2.2 <- ggplot(SKY, x = 0:5, aes(Recommend, Category)) +
+#Fig 2.1
+ggplot(SKY, x = 0:5, aes(Recommend, Category)) +
    ggridges::geom_density_ridges(color = "white",
                                 alpha = 0.4) +
   scale_color_OkabeIto() +
@@ -88,7 +109,37 @@ Fig2.2 <- ggplot(SKY, x = 0:5, aes(Recommend, Category)) +
        y = "Category",
        title = "I would recommend this training to my peers as they would benefit from it")  +
   theme_minimal(base_size = 15)
-Fig2.2
+
+...............
+#Fig 2.2
+ggplot(SKY, aes(Recommend)) +
+  geom_dotplot(aes(fill = Category), 
+               stackgroups = TRUE,
+               binwidth = 0.3) +
+  scale_fill_OkabeIto() +
+  scale_x_continuous(breaks = 0:6, limits = c(0, 6),
+                     labels=c("0" = "", 
+                              "1" = "Strongly Disagree",
+                              "2" = "Disagree", 
+                              "3" = "Neutral",
+                              "4" = "Agree", 
+                              "5" = "Strongly Agree",
+                              "6" = "")) +
+  scale_y_continuous(labels=c("0.00" = "0", 
+                              "0.25" = "6",
+                              "0.50" = "12", 
+                              "0.75" = "18",
+                              "1.00" = "24")) +
+   coord_flip() +
+   coord_flip(expand = FALSE) +
+   theme_minimal(base_size = 15) +
+  theme(panel.grid.minor = element_line(linetype = "blank")) +
+  labs(x = NULL, 
+       y = NULL, 
+       title = "I would recommend this training to my peers as they would benefit from it",
+       subtitle = "N = 21")+
+  labs(y = "Number of Participants")
+
 
 
 ```
@@ -186,6 +237,67 @@ Fig3.10 <-ggplot(SKY, aes(x = Name, y = good_investment_of_time)) +
        title = "The Retreat is a good investment of time") +
     theme_minimal(base_size = 15)
 Fig3.10 + ylim(0, 5)
+
+...............
+SKY %>%
+  count(energy) %>%
+  mutate(prop = 100*n/sum(n-1)) 
+
+SKY %>%
+  count(clarity_mind) %>%
+  mutate(prop = 100*n/sum(n-1))
+
+SKY %>%
+  count(multiple_responsibilities) %>%
+  mutate(prop = 100*n/sum(n-1))
+  
+SKY %>%
+  count(connect_to_myself) %>%
+  mutate(prop = 100*n/sum(n-1))
+
+SKY %>%
+  count(stay_focused) %>%
+  mutate(prop = 100*n/sum(n-1))
+
+SKY %>%
+  count(remain_calm) %>%
+  mutate(prop = 100*n/sum(n-1))
+
+SKY %>%
+  count(gain_resilience) %>%
+  mutate(prop = 100*n/sum(n-1))
+
+
+SKY %>%
+  count(broader_perspectives) %>%
+  mutate(prop = 100*n/sum(n-1))
+
+SKY %>%
+  count(connect_with_others) %>%
+  mutate(prop = 100*n/sum(n-1))
+
+kable()
+
+begin{table}[ht]
+centering
+begin{tabular}{rllrl}
+hline
+& Question About Retreat & Strongly Disagree & Disagree & Neutral & Agree & Agree & Strongly Agree (in %)
+hline
+1 & Increase my energy levels & 0 & 0 & 5 & 15 & 80
+2 & Enhance my clarity of mind & 0 & 0 & 0 & 15 & 85
+3 & Increase my ability to manage multiple responsibilities & 0 & 0 & 25 & 75
+4 & Enhance my ability to connect to myself & 0 & 0 & 20 & 80
+5 & Increase my ability to stay focused on the task at hand & 0 & 0 & 15 & 85
+6 & Improve my ability to remain calm in difficult situations & 0 & 0 & 5 & 15 & 80
+7 & Increase my ability to gain resilience & 0 & 0 & 29 & 80
+8 & Increase my ability to gain broader perspectives when facing challenging situations & 0 & 0 & 20 & 80
+9 & Increase my ability to connect with others & 0 & 0 & 15 & 85
+end{tabular}
+end{table}
+
+
+
 ```
 
 
@@ -217,7 +329,7 @@ experience <- c("I thought it was positive and powerful",
 
 experience_df <- tibble(line = 1:21, text = experience)
 
-experience_df %>%
+experience_df <- experience_df %>%
   unnest_tokens(word, text)
 
 data(stop_words)
@@ -228,14 +340,9 @@ experience_df <- experience_df %>%
 experience_df %>%
   count(word, sort = TRUE)
 
-
-
-
-
-
 experience_df  %>%
   count(word, sort = TRUE) %>%
-  filter (n > 600) %>%
+  filter (n > 1) %>%
   mutate(word = reorder(word, n)) %>%
   ggplot(aes(word, n)) +
   geom_col() +
@@ -243,8 +350,26 @@ experience_df  %>%
   coord_flip() +
     theme_minimal(base_size = 15)
   
-
-
+...............
+experience_df  %>%
+  count(word, sort = TRUE) %>%
+  filter (n > 1) %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(word, n)) +
+  geom_col(fill = "cornflowerblue",
+           alpha = 0.7) +
+  scale_y_continuous(breaks = seq(0, 11, by = 1),
+                     limits = c(0, 5.25)) +
+  xlab(NULL) +
+  coord_flip() + 
+  coord_flip(expand = FALSE) +
+  labs(x = "Word Use",
+       y = "Frequency Count",
+       title = "How was the experiece?") +
+    theme_minimal(base_size = 15)  + 
+    theme_minimal(base_size = 15)  + 
+  theme(panel.grid.minor = element_line(linetype = "blank")) +
+  guides(fill = "none") 
 
 ```
 
