@@ -19,7 +19,9 @@ library("viridis")
 library("colorblindr")
 library("stringr")
 library("tidytext")
-library("xtable")
+library("kableExtra")
+library("formattable")
+library("flextable")
 knitr::opts_chunk$set(warning = FALSE,
                       message = FALSE,
                       error = TRUE,
@@ -41,6 +43,7 @@ SKY <- import(here("data", "survey.xlsx"), setclass = "tbl_df")
 
 str(SKY)
 
+#original
 #Fig1.1
 ggplot(SKY, aes(x = Category)) +
   geom_histogram(stat = "Count",
@@ -50,7 +53,7 @@ ggplot(SKY, aes(x = Category)) +
    theme_minimal(base_size = 15)
 
 
-
+#original
 #Fig1.2
 SKY
 
@@ -76,6 +79,7 @@ ggplot(aes(x = Category)) +
   theme(panel.grid.minor = element_line(linetype = "blank"))
 
 ...............
+#updated
 #Fig1.3
 SKY %>% 
   count(Category) %>% 
@@ -100,6 +104,7 @@ SKY %>%
 ```{r survey recommend}
 library(ggridges)
 
+#original
 #Fig 2.1
 ggplot(SKY, x = 0:5, aes(Recommend, Category)) +
    ggridges::geom_density_ridges(color = "white",
@@ -111,6 +116,7 @@ ggplot(SKY, x = 0:5, aes(Recommend, Category)) +
   theme_minimal(base_size = 15)
 
 ...............
+#updated
 #Fig 2.2
 ggplot(SKY, aes(Recommend)) +
   geom_dotplot(aes(fill = Category), 
@@ -146,6 +152,7 @@ ggplot(SKY, aes(Recommend)) +
 
 
 ```{r survey response quantitative}
+#original
 Fig3.1 <- ggplot(SKY, aes(x = Name, y = energy)) +
    geom_point() +
   coord_flip() +
@@ -239,6 +246,7 @@ Fig3.10 <-ggplot(SKY, aes(x = Name, y = good_investment_of_time)) +
 Fig3.10 + ylim(0, 5)
 
 ...............
+#updated
 SKY %>%
   count(energy) %>%
   mutate(prop = 100*n/sum(n-1)) 
@@ -276,34 +284,22 @@ SKY %>%
   count(connect_with_others) %>%
   mutate(prop = 100*n/sum(n-1))
 
-kable()
 
-begin{table}[ht]
-centering
-begin{tabular}{rllrl}
-hline
-& Question About Retreat & Strongly Disagree & Disagree & Neutral & Agree & Agree & Strongly Agree (in %)
-hline
-1 & Increase my energy levels & 0 & 0 & 5 & 15 & 80
-2 & Enhance my clarity of mind & 0 & 0 & 0 & 15 & 85
-3 & Increase my ability to manage multiple responsibilities & 0 & 0 & 25 & 75
-4 & Enhance my ability to connect to myself & 0 & 0 & 20 & 80
-5 & Increase my ability to stay focused on the task at hand & 0 & 0 & 15 & 85
-6 & Improve my ability to remain calm in difficult situations & 0 & 0 & 5 & 15 & 80
-7 & Increase my ability to gain resilience & 0 & 0 & 29 & 80
-8 & Increase my ability to gain broader perspectives when facing challenging situations & 0 & 0 & 20 & 80
-9 & Increase my ability to connect with others & 0 & 0 & 15 & 85
-end{tabular}
-end{table}
+SKY2 <- import(here("data", "SKY2.xlsx"), setclass = "tbl_df") 
 
-
+SKY2 %>% 
+  kable() %>% 
+   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive", full_width = NULL, position = "left")) %>% 
+  column_spec(6:6, bold = T, color = "#3A9E23", background = "#F8F668") %>%
+   footnote(general = "The participants were asked to rate how the techniques taught in the SKY Happiness Retreat have the ability to impact different areas.",
+            number = c("Numbers are in percentage"))
 
 ```
 
 
 
 
-```{r survey response qualitative}
+```{r survey response qualitative 1}
 
 experience <- c("I thought it was positive and powerful",
                 "It was very beautiful. It felt like truth",
@@ -340,6 +336,7 @@ experience_df <- experience_df %>%
 experience_df %>%
   count(word, sort = TRUE)
 
+#original
 experience_df  %>%
   count(word, sort = TRUE) %>%
   filter (n > 1) %>%
@@ -351,6 +348,7 @@ experience_df  %>%
     theme_minimal(base_size = 15)
   
 ...............
+#updated
 experience_df  %>%
   count(word, sort = TRUE) %>%
   filter (n > 1) %>%
@@ -374,3 +372,70 @@ experience_df  %>%
 
 ```
 
+
+
+```{r survey response qualitative 2}
+
+say <- c("It's a connection that connects",
+         "I would say it is very much worthwhile",
+         "Do it! Jump in!",
+         "Come with an open mind, leave with an open heart",
+         "I would highly encourage anyone to participate. I was able to be open, honest, and vulnerable about my experiences and be fully accepted",
+         "It will empower you and change your life",
+         "It's more than simply de-stressing. It's learning and adopting a new healthy mental lifestyle",
+         "Absolutely go! The time you give to yourself to experience this retreat will help you become a better, fuller human being",
+         "How much do you value allowing happiness into your life and the lives of others?",
+         "This has been one of the most beautiful life experiences that I will always carry with me! SKY gives you tools to live life more fully",
+         "Do it!! Just, do it!",
+         "Remember the positivity in yourself and others, and spread to world",
+         "It really is helpful for college student stress",
+         "Go for it. Things will be better",
+         "It is a good use of time",
+         "This is such a valuable experience!",
+         "Good stepping stones toward peace and love",
+         "You should do it. Keep an open mind",
+         "If you're willing to practice each day, it will help you",
+         "Don't hesitate; meditate. Better get some rotalities :)")
+         
+say_df <- say() %>% 
+  unnest_tokens(bigram, text, token = "ngrams", n = 2)
+
+say_df %>% 
+  count(bigram, sort = TRUE)
+
+bigrams_seperated <- say_df %>% 
+  seperate(bigram, c("word1", "word2"), sep = " ")
+
+bigrams_filtered <- bigrams_seperated %>% 
+  filter(!word1 %in% stop_word$word) %>% 
+  filter(!word2 %in% stop_words$word)
+
+bigram_counts <- bigram_filtered %>% 
+  count(word1, word2, sort = TRUE)
+bigram_counts
+
+bigram_united <- bigram_filtered %>% 
+  unite(bigram, word1, word2, sep = "")
+bigram_united
+
+
+
+say_df() %>%
+  unnest_tokens(trigram, text, token = "ngrams", n = 2) %>%
+  separate(trigram, c("word1", "word2"), sep = " ") %>%
+  filter(!word1 %in% stop_words$word,
+         !word2 %in% stop_words$word) %>%
+  count(word1, word2, word3, sort = TRUE)
+
+
+say_df() %>%
+  unnest_tokens(trigram, text, token = "ngrams", n = 3) %>%
+  separate(trigram, c("word1", "word2", "word3"), sep = " ") %>%
+  filter(!word1 %in% stop_words$word,
+         !word2 %in% stop_words$word,
+         !word3 %in% stop_words$word) %>%
+  count(word1, word2, word3, sort = TRUE)
+
+
+
+```
