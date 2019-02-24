@@ -22,6 +22,7 @@ library("tidytext")
 library("kableExtra")
 library("formattable")
 library("flextable")
+
 knitr::opts_chunk$set(warning = FALSE,
                       message = FALSE,
                       error = TRUE,
@@ -436,7 +437,23 @@ say_df <- say_SKY() %>%
           !word2 %in% stop_words$word,
           !word3 %in% stop_words$word) %>%
    count(word1, word2, word3, sort = TRUE)
+ 
+ 
+ggplot(aes(word, n)) +
+  geom_col(fill = "#CCFB5D",
+           alpha = 0.7) +
+  scale_y_continuous(breaks = seq(0, 11, by = 1),
+                     limits = c(0, 5.25)) +
+  xlab(NULL) +
+  coord_flip() + 
+  coord_flip(expand = FALSE) +
+  labs(x = "Phrase Use",
+       y = "Frequency Count",
+       title = "How would you say to someone considering the Retreat?") +
+    theme_minimal(base_size = 15)  + 
+    theme_minimal(base_size = 15)  + 
+  theme(panel.grid.minor = element_line(linetype = "blank")) +
+  guides(fill = "none") 
 
-
-
+   
 ```
