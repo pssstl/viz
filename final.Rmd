@@ -5,7 +5,7 @@ date: "2/21/2019"
 output: pdf_document
 ---
 
-```{r setup, include = FALSE}
+```{r setup, include = TRUE, echo = TRUE}
 library("dplyr")
 library("tidyverse")
 library("rio")
@@ -301,6 +301,7 @@ SKY2 %>%
 
 
 ```{r survey response qualitative 1}
+#still working to get this graph to show - would appreciate comments
 
 experience <- c("I thought it was positive and powerful",
                 "It was very beautiful. It felt like truth",
