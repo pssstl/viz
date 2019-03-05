@@ -123,7 +123,7 @@ ggplot(OH0, aes(x = fct_reorder(Category, n), n)) +
 
 ```
 
-I really liked this visuzalization. However, I felt like I wanted to know more, specifically in terms of the difference in gender within these categories. For this I suggest the plot that I added after your last plot. To make sure I am not messing up your data names I names the new dataset that I created the get the count by gender OH0 (I just used my initials and added 0 in case I need to create another dataset as I move forward in the review). I hope that you will like this new suggestion.  
+I really liked this visuzalization. However, I felt like I wanted to know more, specifically in terms of the difference in gender within these categories. For this I suggest the plot that I added after your last plot. To make sure I am not messing up your data names I named the new dataset that I created the get the count by gender OH0 (I just used my initials and added 0 in case I need to create another dataset as I move forward in the review). I hope that you will like this new suggestion.  
 
 
 ```{r survey recommend}
