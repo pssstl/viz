@@ -1,0 +1,26 @@
+Visual 1:
+
+It was great to see the different iterations and how you worked on improving the graph over time. I think it’s also a strength that you used a colorblind safe palette.  Good attention to detail in the graph overall.  I like the bit of transparency you added to the bars as well. You’ve used a bar graph well to demonstrate counts in category bins.
+
+Area for improvement:  I think you could improve your title a bit by making it more descriptive and changing it from a question. 
+
+Instead of count you could use percentage and graph the percent of the total sample each category is.
+
+Visual 2:
+
+It was great to see you tryout different type of visuals. You also used a color safe palate here.  
+
+Area for improvement:  In your dotplot, the circles push right up against the y-axis, if you could adjust this a bit so there was a bit more space there, that would look more visually appealing. I think you could do this by adjusting the x limits.
+
+I learned from your graphs that I can use "NULL" to get rid of an axis title, previously I had just been saying x = ""
+
+
+Other Visuals:
+The next few visuals are individual questions and it looks like you have each individual participant plotted on the y-axis?  Not sure these visuals are as effective as they could be, I don’t know if you need to have data for each individual.  It seems that you could visualize a summary and this would communicate well.  If it is important that you map each individuals data, I would suggest trying to adjust the x-axis scale, there’s a large amount of space that is not necessary, especially since there isn’t a lot of data variation. 
+
+
+The “How was your experience?” visual:
+
+Good use of a bar graph to display counts! Nice blue color
+
+Looks like there is a typo in the title.  
