@@ -44,7 +44,7 @@ theme_set(theme_minimal(base_size = 8))
 
 Sidebar Title {.sidebar}
 --------
-With the help of my reviewer, I was able to achieve this final plot. Looking at the previous versions, some of the unaesthetic visualization elements include: unnessasary axes descriptions, lack-of-detail title, color-blind unfriendly, x-y axis lines going over the bars, heavy cognitive load.
+With the help of my reviewer, I was able to achieve this version of the final plot. Looking at the previous versions, some of the unaesthetic visualization elements include: unnessasary axes descriptions, lack-of-detailed title, color-blind unfriendly, x-y axes lines going over the bars, heavy cognitive load.
 
 
 Column {.tabset}
@@ -139,7 +139,7 @@ ggplot(SKY, aes(x = Category)) +
 
 Sidebar Title {.sidebar}
 --------
-Version 1 was basically a `r emo::ji("vomit")`-ty train-wrack. Later, a more presentatble visualization, a one without unnecessary load of cognition surfaced. 
+Version 1 was basically a `r emo::ji("vomit")` (aka train-wrack). Later, a more presentatble visualization, a one without unnecessary load of cognition surfaced. 
 
 
 Column {.tabset}
@@ -173,8 +173,8 @@ ggplot(SKY, aes(Recommend)) +
   theme(panel.grid.minor = element_line(linetype = "blank")) +
   labs(x = NULL, 
        y = NULL, 
-       title = "Here is how the participants feel about recommending this Retreat to their peers",
-       subtitle = "N = 21")+
+       title = "Here is how the participants feel about",
+       subtitle = "recommending this Retreat to their peers")+
   labs(y = "Number of Participants") +
   theme(legend.position = "bottom")
 ```
@@ -228,8 +228,8 @@ ggplot(SKY, x = 0:5, aes(Recommend, Category)) +
 
 Sidebar Title {.sidebar}
 --------
-Initially, I ploted all of participants responses into individual dotplots. Looing at them, I don't know how much information I gained. So, I decided to try the table. The final table has the approprate title and everything. A little victory. 
-`r emo::ji("birthday")`
+Initially, I plotted all of participant responses into individual dotplots. Looing at them, I don't know how much information I gained. So, I decided to try the table. The final table has the approprate title and everything. 
+`r emo::ji("star")` `r emo::ji("star2")` `r emo::ji("star")` A little victory. 
 
 Column {.tabset}
 -----------------------------------------------------------------------
