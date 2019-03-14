@@ -1,10 +1,19 @@
 ---
-title: "Happiness Retreat Outcome Survey"
+title: "UO Happiness Retreat Outcome Survey"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
     vertical_layout: fill
 ---
+
+<style type="text/css">
+
+.sidebar {
+  font-size: 1.5rem
+}
+
+</style>
+
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
@@ -130,7 +139,7 @@ ggplot(SKY, aes(x = Category)) +
 
 Sidebar Title {.sidebar}
 --------
-Version 1 was basically a `r emo::ji("poop")`-ty train-wrack. Later, a more presentatble visualization, a one without unnecessary load of cognition surfaced. 
+Version 1 was basically a `r emo::ji("vomit")`-ty train-wrack. Later, a more presentatble visualization, a one without unnecessary load of cognition surfaced. 
 
 
 Column {.tabset}
@@ -144,7 +153,7 @@ SKY <- import(here("data", "survey.xlsx"), setclass = "tbl_df")
 ggplot(SKY, aes(Recommend)) +
   geom_dotplot(aes(fill = Category), 
                stackgroups = TRUE,
-               binwidth = 0.31) +
+               binwidth = .4) +
   scale_fill_OkabeIto(name = "") +
   scale_x_continuous(breaks = 0:6, limits = c(0, 6),
                      labels=c("0" = "", 
@@ -159,7 +168,6 @@ ggplot(SKY, aes(Recommend)) +
                               "0.50" = "12", 
                               "0.75" = "18",
                               "1.00" = "24")) +
-   coord_flip() +
    coord_flip(expand = FALSE) +
    theme_minimal(base_size = 15) +
   theme(panel.grid.minor = element_line(linetype = "blank")) +
@@ -167,7 +175,8 @@ ggplot(SKY, aes(Recommend)) +
        y = NULL, 
        title = "Here is how the participants feel about recommending this Retreat to their peers",
        subtitle = "N = 21")+
-  labs(y = "Number of Participants")
+  labs(y = "Number of Participants") +
+  theme(legend.position = "bottom")
 ```
 
 ### Version 2
@@ -227,42 +236,42 @@ Column {.tabset}
 
 ### Final Version
 ```{r table}
-SKY %>%
-  count(energy) %>%
-  mutate(prop = 100*n/sum(n-1)) 
-
-SKY %>%
-  count(clarity_mind) %>%
-  mutate(prop = 100*n/sum(n-1))
-
-SKY %>%
-  count(multiple_responsibilities) %>%
-  mutate(prop = 100*n/sum(n-1))
-  
-SKY %>%
-  count(connect_to_myself) %>%
-  mutate(prop = 100*n/sum(n-1))
-
-SKY %>%
-  count(stay_focused) %>%
-  mutate(prop = 100*n/sum(n-1))
-
-SKY %>%
-  count(remain_calm) %>%
-  mutate(prop = 100*n/sum(n-1))
-
-SKY %>%
-  count(gain_resilience) %>%
-  mutate(prop = 100*n/sum(n-1))
-
-
-SKY %>%
-  count(broader_perspectives) %>%
-  mutate(prop = 100*n/sum(n-1))
-
-SKY %>%
-  count(connect_with_others) %>%
-  mutate(prop = 100*n/sum(n-1))
+# SKY %>%
+#   count(energy) %>%
+#   mutate(prop = 100*n/sum(n-1)) 
+# 
+# SKY %>%
+#   count(clarity_mind) %>%
+#   mutate(prop = 100*n/sum(n-1))
+# 
+# SKY %>%
+#   count(multiple_responsibilities) %>%
+#   mutate(prop = 100*n/sum(n-1))
+#   
+# SKY %>%
+#   count(connect_to_myself) %>%
+#   mutate(prop = 100*n/sum(n-1))
+# 
+# SKY %>%
+#   count(stay_focused) %>%
+#   mutate(prop = 100*n/sum(n-1))
+# 
+# SKY %>%
+#   count(remain_calm) %>%
+#   mutate(prop = 100*n/sum(n-1))
+# 
+# SKY %>%
+#   count(gain_resilience) %>%
+#   mutate(prop = 100*n/sum(n-1))
+# 
+# 
+# SKY %>%
+#   count(broader_perspectives) %>%
+#   mutate(prop = 100*n/sum(n-1))
+# 
+# SKY %>%
+#   count(connect_with_others) %>%
+#   mutate(prop = 100*n/sum(n-1))
 
 SKY2 <- import(here("data", "SKY2.xlsx"), setclass = "tbl_df") 
 
@@ -311,7 +320,7 @@ Column {.tabset}
 
 
 ### Final final (fingers-crossed)
-```{r echo = FALSE}
+```{r f}
 
 experience <- c("I thought it was positive and powerful",
                 "It was very beautiful. It felt like truth",
@@ -345,9 +354,9 @@ data(stop_words)
 experience_df <- experience_df %>%
   anti_join(stop_words) %>% 
   filter(word != "feel" & word != "experience")
-
-experience_df %>%
-  count(word, sort = TRUE) 
+# 
+# experience_df %>%
+#   count(word, sort = TRUE) 
 
 
 experience_df  %>%
