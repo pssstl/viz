@@ -285,7 +285,7 @@ SKY2 %>%
 ```
 
 
-### Final to last
+### Version 2
 ```{r table2}
 SKY2 %>% 
   kable() %>% 
