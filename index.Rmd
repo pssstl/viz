@@ -228,7 +228,7 @@ ggplot(SKY, x = 0:5, aes(Recommend, Category)) +
 
 Sidebar Title {.sidebar}
 --------
-Initially, I plotted all of participant responses into individual dotplots. Looing at them, I don't know how much information I gained. So, I decided to try the table. The final table has the approprate title and everything. 
+Initially, I plotted all of participant responses into individual dotplots. Looing at them, I didn't know how much information I gained. So, I decided to try the table. The final table has the approprate title and everything. 
 `r emo::ji("star")` `r emo::ji("star2")` `r emo::ji("star")` A little victory. 
 
 Column {.tabset}
